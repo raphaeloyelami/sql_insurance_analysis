@@ -75,7 +75,7 @@ GROUP BY c.CustomerID
 ORDER BY TotalPremium DESC
 LIMIT 5;
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/top_5_premium.png)
+![top_5_premium](https://github.com/user-attachments/assets/1fb9826e-a2a1-4262-87a6-4c567d0ee550)
 
 ## 2. How many claims have a status of 'Approved' and were made in the last 12 months?
 ### Scenario:
@@ -86,7 +86,7 @@ FROM Claims
 WHERE ClaimStatus = 'Approved'
   AND ClaimDate >= CURRENT_DATE - INTERVAL '12 months';
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/2024_approvedclaims.png)
+![2024_approvedclaims](https://github.com/user-attachments/assets/bff99696-f411-471e-bcfb-6d22bf7e6fc4)
 
 
 ## 3. What is the total premium for policies that have claims pending or approved status?
@@ -98,7 +98,7 @@ FROM Policies p
 JOIN Claims cl ON p.PolicyID = cl.PolicyID
 WHERE cl.ClaimStatus IN ('Approved', 'Pending');
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/totalpremium.png)
+![totalpremium](https://github.com/user-attachments/assets/a6f1ff62-fe09-4762-b619-34f96091ca35)
 
 ## 4. What is the running total of premiums for each customer ordered by policy start date?
 ### Scenario:
@@ -114,7 +114,7 @@ JOIN Customers c
 ON p.CustomerID = c.CustomerID
 ORDER BY c.CustomerID, p.PolicyStartDate;
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/premium_running_total.png)
+![premium_running_total](https://github.com/user-attachments/assets/c8520b75-f894-413a-9bc6-8bd374b4e1b2)
 
 ## 5. What is the average claim amount for each customer, including those who have not yet filed any claims?
 ### Scenario:
@@ -138,7 +138,7 @@ LEFT JOIN ClaimData cd
 ON c.CustomerID = cd.CustomerID
 ORDER BY c.LastName;
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/avg_claim_cust.png)
+![avg_claim_cust](https://github.com/user-attachments/assets/2a9d41dd-4dc3-4155-9b7e-6c01447e3cf0)
 
 ## 6. Which customers have had a claim amount greater than $5000 for the last two claims they made?
 ### Scenario:
@@ -164,7 +164,7 @@ WHERE rc.ClaimRank <= 2
   AND rc.ClaimAmount > 5000
 ORDER BY full_name, rc.ClaimDate DESC;
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/more_than_5k.png)
+![more_than_5k](https://github.com/user-attachments/assets/4354b328-7069-48f5-8610-6436aeabe333)
 
 ## 7. How can we segment customers based on their total premium spending and age to create targeted marketing campaigns?
 ### Scenerio:
@@ -191,7 +191,7 @@ LEFT JOIN Policies p ON c.CustomerID = p.CustomerID
 GROUP BY c.CustomerID, c.FirstName, c.LastName, c.DateOfBirth
 ORDER BY TotalPremium DESC;
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/customer_segmentation.png)
+![customer_segmentation](https://github.com/user-attachments/assets/2aa6600e-fbcf-4a36-96dc-8302f23e540c)
 
 ## 8. How would you handle an error when inserting a record with a null claim amount?
 ### Scenario: When inserting claims into the database, the company requires that a claim amount must not be `NULL`. This query ensures that the system prevents inserting such invalid records.
@@ -220,7 +220,7 @@ $$;
 ```sql
 CALL InsertClaimWithCheck(41,'2025-01-21',NULL,'Car accidents','Pending');
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/stored_procedure.png)
+![stored_procedure](https://github.com/user-attachments/assets/c54d73fc-e76a-4099-8629-ffda826649c1)
 
 ## 9. What is the performance impact of frequent querying of large claims data? How would you optimize query performance?
 ### Scenario: With large amounts of claims data, frequent queries might result in slow performance. Indexing frequently queried columns such as `ClaimDate` and `ClaimStatus` will improve query performance.
@@ -231,7 +231,7 @@ CREATE INDEX idx_claim_date ON Claims (ClaimDate, ClaimStatus);
 ``` sql
 EXPLAIN SELECT * FROM claims WHERE ClaimDate > '2023-12-31' AND claimstatus = 'Pending';
 ```
-![Result](https://github.com/raphaeloyelami/insurance_queryresukt/blob/6660d78c4b836a04c8cebf65531eeab6d59aed6e/explain_query.png)
+![explain_query](https://github.com/user-attachments/assets/de06ab69-d954-45cd-ba89-ab83adb683c2)
 
 ## 10. Create a user role that allows access only to customer names and claim amounts (no policy details).
 ### Scenario: A business needs to create a restricted user role in the database that can only access customer names and their claim amounts, without revealing sensitive policy information.
@@ -277,6 +277,6 @@ REVOKE INSERT, UPDATE, DELETE ON Claims_View FROM ClaimAccessUser;
 - Automated Reporting: Set up automated reports using Python or SQL Server Reporting Services (SSRS).
 
 # Conclusion:
-This project demonstrated the application of advanced SQL techniques to solve real-world business problems using customer, policy, and claims data. While the dataset used in this project is relatively small, the queries and techniques employed are highly efficient and scalable. When applied to larger datasets, these same methods—such as **Window Functions**, **CASE WHEN**, **COALESCE**, **CTEs**, and optimized joins—ensure that the system can handle more extensive data efficiently without sacrificing performance.
+This project demonstrated the application of advanced SQL techniques to solve real-world business problems using customer, policy, and claims data. While the dataset used in this project is small, the queries and techniques employed are highly efficient and scalable. When applied to larger datasets, these same methods—such as **Window Functions**, **CASE WHEN**, **COALESCE**, **CTEs**, **INDEXES**, and optimized joins—ensure that the system can handle more extensive data efficiently without sacrificing performance.
 
 By using best practices for query optimization, indexing, and data segmentation, businesses can perform fast, reliable data analysis even with large datasets, helping improve decision-making, target marketing efforts, and enhance customer service.
